@@ -9,11 +9,18 @@ use App\Question;
 
 class QuestionController extends Controller
 {
-    public function index() 
+    public function index(Request $request) 
     {
+        $request = request();
+        if($request->has('name')){
+            $name = $request->input('name');
+            dd($name);
+        }
+       
+
     
         $result = Question::latest()->get();
-        dd($result);
+        // dd($result);
 
         $view = view("questions/index");
         // give the array of questions to the view
@@ -28,7 +35,7 @@ class QuestionController extends Controller
 
         // Select from answers where id of question is the id os this
         // $answers = Answer::where('question_id', $question_id)->aldest()->get();
-        $answer  = $question->answers;
+        $answers = $question->answers;
 
         // SELECT * FROM `questions` WHERE `id` = {$question_id}
         $question = Question::where('id', $question_id)->first();
@@ -43,5 +50,29 @@ class QuestionController extends Controller
 
         return $view;
         return view(['id' => $id]);
+    }
+
+    public function create()
+    {
+        $view = view('questions/create');
+
+        return $view;
+    }
+
+    public function store(Request $request)
+    {
+        $question = new Question();
+        
+        $question->fill([
+            'title' => $request->input('title'),
+            'text' => $request->input('text')
+        ]);
+
+        $question->save();
+        
+        session()->flash('success_message', 'Success!');
+ 
+        return redirect()->action('QuestionController@show', ['id' => $question->id]);
+
     }
 }

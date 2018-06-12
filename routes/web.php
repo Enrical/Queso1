@@ -17,7 +17,11 @@ Route::get('/', function () {
 
 Route::get('/questions', 'QuestionController@index');
 
-Route::get('/questions/{id}', 'QuestionController@show')->name('show question');
+Route::get('/questions/create', 'QuestionController@create');
+
+Route::post('/questions', 'QuestionController@store');
+
+Route::get('/questions/{id}', 'QuestionController@show')->name('show question'); //->where('id', '\d+')
 
 // list of categories
 Route::get('/categories', 'CategoryController@index');
