@@ -8,6 +8,12 @@ class QuestionController extends Controller
 {
     public function index() 
     {
+        $request = request();
+        
+        $name = $request->input('name');
+
+        dd($request);
+
         $view = view("questions/index");
         return $view;
     }
