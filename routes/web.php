@@ -21,3 +21,5 @@ Route::get('/questions/{id}', 'QuestionController@show')->name('show question');
 
 // list of categories
 Route::get('/categories', 'CategoryController@index');
+
+Route::get('/movies', 'MovieController@index');
